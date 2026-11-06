@@ -1,0 +1,21 @@
+/* Individual pedal images replace the old combined pedals sprite. */
+.pedal {
+  width: clamp(65px, 9vw, 145px);
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+}
+
+.pedal img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 520px) {
+  .pedal {
+    display: none;
+  }
+}

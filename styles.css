@@ -1,0 +1,1470 @@
+
+:root {
+    --ink: #0b1324;
+    --red: #f72b3a;
+    --cream: #fff8e5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--cream);
+    color: #16243a;
+    font-family: Nunito, Arial, sans-serif;
+}
+
+/* Full screen navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 80px;
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    background: #080c1c;
+    z-index: 10000;
+
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+}
+
+/* Show navbar */
+.nav-trigger:hover + .navbar,
+.navbar:hover {
+    transform: translateY(0);
+}
+
+/* Hover trigger */
+.nav-trigger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 15px;
+    z-index: 10001;
+}
+
+/* Prevent horizontal overflow */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.logo,
+.menu-button {
+    display: none;
+}
+
+.topbar nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: min(100%, 1420px);
+}
+
+.topbar nav a {
+    padding: 23px 0 17px;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    font: clamp(.6rem, 1vw, .85rem) "Press Start 2P", monospace;
+    text-shadow: 2px 2px #34334a;
+}
+
+.topbar nav a:hover,
+.topbar nav a.active {
+    border-bottom: 4px solid var(--red);
+}
+
+/* Background  */
+.game-stage {
+    height: calc(100svh - 64px);
+    min-height: 650px;
+    max-height: 940px;
+    position: relative;
+    overflow: hidden;
+    background: url("assets/background.png") center/110% no-repeat;
+    background-position: center 120%;
+}
+
+/* HUD */
+.hud {
+    position: absolute;
+    z-index: 30;
+    color: #fff;
+    font-family: "Press Start 2P", monospace;
+    text-shadow: 3px 3px #111;
+}
+
+.hud-left {
+    top: clamp(22px, 4vh, 50px);
+    left: clamp(20px, 3vw, 55px);
+    display: grid;
+    gap: 7px;
+}
+
+.fuel-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fuel-status img {
+    width: 59px;
+    height: auto;
+    object-fit: contain;
+}
+
+.fuel-bar {
+    width: clamp(150px, 13vw, 220px);
+    height: 35px;
+    padding: 3px;
+    border: 4px solid #00b2f8;
+    border-radius: 6px;
+    background: #172d51;
+   
+}
+
+.fuel-bar b {
+    display: block;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(90deg, #08d900, #83ef08);
+}
+
+.score {
+    height: 47px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: clamp(.8rem, 1.5vw, 1.2rem);
+}
+
+.score img {
+    width: 59px;
+    height: auto;
+    object-fit: contain;
+}
+
+.round-asset {
+    clip-path: circle(44% at 50% 50%);
+}
+
+.diamond {
+    clip-path: polygon(50% 5%, 94% 35%, 50% 95%, 6% 35%);
+}
+
+.hud-right {
+    top: clamp(18px, 3.4vh, 42px);
+    right: clamp(22px, 4vw, 64px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(.85rem, 1.4vw, 1.2rem);
+}
+
+.hud-right img {
+    width: 43px;
+    height: 43px;
+    object-fit: contain;
+}
+
+.pause {
+    margin-left: 24px;
+    padding: 2px 8px 3px 1px;
+    border: 3px solid #fff;
+    border-radius: 4px;
+    letter-spacing: -9px;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+/* MAIN HEADING */
+h1 {
+    position: absolute;
+    z-index: 20;
+    top: 13%;
+    left: 50%;
+    width: 100%;
+    margin: 0;
+    transform: translateX(-50%);
+    color: #fff;
+    text-align: center;
+    font-family: "Press Start 2P", monospace;
+    font-style: italic;
+    text-shadow: 4px 4px #111, 7px 7px #07101b;
+}
+
+h1 span {
+    display: block;
+    margin-bottom: 14px;
+    font-size: clamp(1rem, 2vw, 1.85rem);
+}
+
+h1 b {
+    color: var(--red);
+    letter-spacing: -.07em;
+    font-size: clamp(1.55rem, 4.4vw, 4.3rem);
+}
+
+h1 em {
+    color: #fff;
+    font-style: italic;
+}
+
+/* GROUND AND CAR */
+.ground {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    left: 0;
+    width: 110%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+}
+
+.car {
+    position: absolute;
+    z-index: 4;
+    bottom: 27%;
+    left: clamp(2%, 10vw, 11%);
+    width: clamp(260px, 25vw, 500px);
+    height: auto
+;
+    /*filter: drop-shadow(0 7px 3px #15253577);*/
+    
+    transform: rotate(-2deg);
+    rotate: -6deg;
+    animation: engine 1.6s ease-in-out infinite;
+}
+
+/* COINS */
+.coin {
+    position: absolute;
+    z-index: 3;
+    width: clamp(46px, 4vw, 84px);
+    height: clamp(46px, 6vw, 84px);
+    transition: transform .18s;
+}
+
+.coin img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.coin:hover {
+    transform: translateY(-5px) scale(1.12);
+}
+
+.coin-one {
+    bottom: 33%;
+    left: 30%;
+}
+
+.coin-two {
+    bottom: 28%;
+    left: 45%;
+}
+
+.coin-three {
+    bottom: 30%;
+    left: 61%;
+}
+
+/* ROAD SIGNS */
+.sign {
+    position: absolute;
+    z-index: 3;
+    width: clamp(145px, 1vw, 250px);
+    filter: drop-shadow(0 4px 2px #33210f70);
+    transition: transfo250px.18s;
+}
+
+.sign img {
+    display: block;
+    width: 160px;
+    height: 210px;
+}
+
+.sign:hover {
+    transform: translateY(-7px) scale(1.03);
+}
+
+.sign-about {
+    bottom: 25%;
+    left: 34%;
+    rotate: 20%;
+}
+
+.sign-projects {
+    bottom: 21%;
+    left: 49%;
+}
+
+.sign-contact {
+    bottom: 24%;
+    left: 65%;
+}
+
+/* FINISH LINE */
+.finish {
+    position: absolute;
+    z-index: 10;
+    right: 3%;
+    bottom: 32%;
+    width: clamp(100px, 12vw, 190px);
+    text-align: center;
+}
+
+.finish img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.finish b {
+    position: absolute;
+    top: 27%;
+    left: 29%;
+    width: 54%;
+    color: #111;
+    transform: rotate(-5deg);
+    font: clamp(.4rem, .7vw, .7rem)/1.5 "Press Start 2P", monospace;
+}
+
+/* BOTTOM CONTROLS */
+.controls {
+    position: absolute;
+    z-index: 40;
+    right: 0;
+    bottom: -3px;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr minmax(300px, 1.7fr) 1fr 1fr;
+    align-items: end;
+    gap: clamp(8px, 2vw, 38px);
+    padding: 0 clamp(12px, 3vw, 64px);
+}
+
+.meter {
+    justify-self: center;
+    width: 250px;
+    height: auto;
+    filter: drop-shadow(0 4px 2px #0008);
+   
+}
+.boost-meter {
+    translate: 50px 0;
+}
+/* pedals */
+.pedal {
+    
+    width: 180px !important;
+    height: 260px !important; 
+    bottom: 0 !important; 
+    
+}
+
+.pedal {
+    position: relative;
+    width: 180px !important;
+    height: 260px !important;
+    overflow: hidden;
+    transform: scale(1.3);
+    transform-origin: center bottom;
+    top: 100px; /* moves pedal downward */
+    clip-path: polygon(30% 0, 85% 7%, 100% 72%, 71% 84%, 66% 100%, 20% 100%, 24% 77%, 0 62%);
+}
+
+.pedal img {
+    position: absolute;
+    top: 0;
+    width: 390px;
+    height: 260px;
+}
+
+
+.pedal-right {
+    left: 60px;
+}
+
+/* ACTION LINKS */
+.action-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    justify-items: center;
+    gap: 8px 12px;
+}
+
+.action-links a {
+    display: block;
+    width: 180px;
+    transition: transform .18s, filter .18s;
+}
+
+.action-links a:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.20);
+}
+
+.action-links img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.action-links .work-link {
+    grid-column: 1 / -1;
+    width: 300px;
+}
+
+/* ANIMATION */
+@keyframes engine {
+    50% {
+        transform: rotate(-2deg) translateY(-3px);
+    }
+}
+
+/* ABOUT PAGE */
+
+
+/* =================================
+   ABOUT PAGE
+================================= */
+
+.about-stage {
+    width: 100%;
+    min-height: calc(100vh - 56px);
+
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #fff8ed;
+
+    overflow: hidden;
+}
+
+
+/* BACKGROUND */
+
+.about-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url("assets/background_about.png")
+                center center / 100% 100% no-repeat;
+
+    z-index: 0;
+}
+
+
+/* =================================
+   ABOUT CONTAINER
+================================= */
+
+.about-container {
+    width: 70%;
+    height: 40%;
+
+    display: grid;
+    grid-template-columns: 275px 1fr;
+
+    align-items: center;
+    gap: 25px;
+
+    margin: 60px auto 0;
+
+    position: relative;
+    z-index: 500;
+}
+
+
+/* =================================
+   PLAYER CARD
+================================= */
+
+.player-card {
+    background: linear-gradient(
+        140deg,
+        #ffb43f,
+        #ff9d27
+    );
+    width: 100%;
+    height: 70%;
+
+    border: 3px solid #100d09;
+    border-radius: 22px;
+
+    padding: 20px 32px;
+
+    text-align: center;
+
+    box-shadow: 5px 7px 0 #111b30;
+
+    transform: translateY(25px);
+}
+
+
+.player-label {
+    display: inline-block;
+
+    background: #101b30;
+    color: white;
+
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+
+    padding: 13px 15px;
+
+    border-radius: 9px;
+
+    margin-bottom: 20px;
+}
+
+
+.player-image {
+    width: 190px;
+    height: 185px;
+
+    margin: auto;
+
+    border: 4px solid white;
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    background: #f5a36b;
+}
+
+.player-image img {
+    width: 100%;
+    height: 100%;
+    float : bottom;
+
+    object-fit: cover;
+}
+
+
+.player-card h2 {
+    font-family: 'Press Start 2P', cursive;
+
+    font-size: 17px;
+
+    margin-top: 20px;
+
+    line-height: 1.7;
+    color: #090909;
+}
+
+
+/* PLAYER DIVIDER */
+
+.player-divider {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 12px 0;
+}
+
+.player-divider span {
+    height: 3px;
+    flex: 1;
+
+    background: #d78127;
+}
+
+.player-divider i {
+    font-size: 27px;
+    color: #17243b;
+}
+
+
+/* SYSTEM STATUS */
+
+.system-status {
+    background: #101b30;
+
+    color: white;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.system-status span {
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background: #00db43;
+}
+
+
+/* =================================
+   INFORMATION CARD
+================================= */
+
+.about-information {
+    background: linear-gradient(
+        140deg,
+        #ffb63f,
+        #ffa12e
+    );
+    width: 100%;
+    height: 100%;
+
+    border: 3px solid #100d09;
+    border-radius: 22px;
+
+    padding: 25px;
+
+    box-shadow: 5px 7px 0 #111b30;
+}
+
+
+/* HEADINGS */
+
+.about-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
+}
+
+.section-number {
+    min-width: 54px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #101b30;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    border-radius: 10px;
+}
+
+.about-heading h2 {
+    font-family: 'Press Start 2P', cursive;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #080808;
+}
+
+
+/* JOURNEY */
+
+.about-block p {
+    font-size: 18px;
+
+    font-weight: 800;
+    line-height: 1.4;
+
+    color: #080808;
+}
+
+
+/* DIVIDER */
+
+.about-divider {
+    width: 100%;
+    height: 2px;
+
+    background: #d98728;
+
+    margin: 20px 0 15px;
+}
+
+
+/* =================================
+   INTERESTS
+================================= */
+
+.interests-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.interest {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 12px 18px;
+
+    background: #111d34;
+
+    color: white;
+
+    border: 1px solid #304666;
+    border-radius: 12px;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    transition: 0.3s ease;
+}
+
+.interest:hover {
+    transform: translateY(-4px);
+    background: #233c5e;
+}
+
+.interest i {
+    font-size: 26px;
+    color: #42caff;
+
+    width: 32px;
+    text-align: center;
+}
+
+
+/* =================================
+   NEXT CHECKPOINT
+================================= */
+
+.checkpoint {
+    background: #ffc15e;
+
+    border: 2px solid #bd7521;
+    border-radius: 14px;
+
+    padding: 10px;
+
+    margin-top: 1px;
+}
+
+.checkpoint-info {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 8px 5px;
+}
+
+.checkpoint-info i {
+    font-size: 36px;
+    color: #e52626;
+
+    flex-shrink: 0;
+}
+
+.checkpoint-info p {
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+
+/* =================================
+   BACK BUTTON
+================================= */
+
+.about-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    position: relative;
+    z-index: 10;
+
+    margin-top: 625px;
+
+    padding: 13px 25px;
+
+    background: #f52232;
+
+    color: white;
+    text-decoration: none;
+
+    border: 3px solid #101010;
+    border-radius: 11px;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    box-shadow: 4px 5px 0 #101b30;
+
+    transition: 0.25s ease;
+}
+
+.about-back:hover {
+    transform: translateY(-4px);
+    background: #d91121;
+}
+
+
+/* =================================
+   CAR
+================================= */
+
+.about-car {
+    position: absolute;
+
+    width: clamp(180px, 19vw, 320px);
+
+    left: 2%;
+    bottom: 9.5%;
+    rotate: -8deg;
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+.about-car img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    transform: rotate(-3deg);
+}
+
+
+/* =================================
+   NEXT SKILLS SIGN
+================================= */
+
+.about-sign {
+    position: absolute;
+
+    width: 15%;
+    height: 43px;
+    rotate: -2deg;
+    right: 1%;
+    bottom: 30%;
+
+    z-index: 0;
+
+    transition: 0.3s ease;
+}
+
+.about-sign img {
+    width: 100%;
+    display: block;
+}
+
+.about-sign:hover {
+    transform: translateY(-7px);
+}
+
+
+/* =================================
+   GROUND
+================================= */
+
+.about-ground {
+    position: absolute;
+
+    width: 100%;
+    height: 62%;
+
+    left: 0;
+    bottom: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+.about-ground img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1000px) {
+
+    .about-container {
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+    }
+
+    .player-card {
+        padding: 18px;
+    }
+
+    .about-information {
+        padding: 20px;
+    }
+
+    .about-block p {
+        font-size: 16px;
+    }
+
+    .interest {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .about-heading h2 {
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .about-stage {
+        min-height: 1250px;
+    }
+
+    .about-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+z-index: 0;
+    background: url("assets/background_about.png")
+                center center / 100% 100% no-repeat;
+
+    z-index: 0;
+}
+
+
+    .about-container {
+        width: 90%;
+
+        display: flex;
+        flex-direction: column;
+
+        margin-top: 35px;
+    }
+
+    .player-card {
+        width: min(100%, 360px);
+        transform: none;
+    }
+
+    .about-information {
+        width: 100%;
+    }
+
+    .about-back {
+        margin-top: 25px;
+    }
+
+    .about-car {
+        width: 160px;
+        left: 2%;
+        bottom: 6%;
+    }
+
+    .about-sign {
+        width: 120px;
+        right: 2%;
+        bottom: 5%;
+    }
+
+    .about-ground img {
+        min-height: 100px;
+        object-fit: cover;
+    }
+}
+
+/* ==============================================================================================================================
+   SKILLS SECTION
+================================================================================================================================= */
+
+
+/* =========================================
+   GLOBAL SETTINGS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   SKILLS PAGE
+========================================= */
+
+.skills-page {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background: #83d0fa;
+}
+
+
+
+
+
+/* =========================================
+   SKY AND MOUNTAIN BACKGROUND
+========================================= */
+
+.game-background {
+    position: absolute;
+    inset: 0px 0 0;
+
+    background-image: url("assets/background_skill.png");
+
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.back-btn {
+    position: absolute;
+
+    top: 42px;
+    left: 3%;
+
+    padding: 10px 25px;
+
+    background: linear-gradient(#fff, #d4d4d4);
+
+    border: 3px solid #101820;
+    border-radius: 16px;
+
+    color: #101820;
+    text-decoration: none;
+
+    font-size: 21px;
+    font-weight: 900;
+
+    box-shadow: 0 4px 0 #172332;
+
+    z-index: 10;
+}
+
+.back-btn:hover {
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   SKILLS TITLE
+========================================= */
+
+.skills-header {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+    padding-top: 80px;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    width: 20%;
+
+    margin: auto;
+}
+
+.title-container h1 {
+    background: linear-gradient(
+        180deg,
+        #ffffff,
+        #aeb9c2,
+        #e2e5e8
+    );
+
+    border: 10px  solid #101820;
+    border-radius: 20px;
+    text-shadow: none;
+    padding: 10px 8px;
+
+    color: #05090d;
+
+    font-family: 'Press Start 2P', cursive;
+    font-size: 40px;
+    font-weight: 5;
+
+    letter-spacing: 5px;
+
+    box-shadow:
+        inset 0 0px 0px white,
+        0 5px 0 #172332;
+}
+
+
+/* Racing Flags */
+
+.flag {
+    position: absolute;
+
+    width: 105px;
+    height: 105px;
+
+    object-fit: contain;
+    z-index: -1;
+}
+
+.left-flag {
+    left: -40px;
+    top: -70px;
+    transform: rotate(-35deg);
+}
+
+.right-flag {
+    right: -40px;
+    top:-70px;
+    transform: scaleX(-1) rotate(-35deg);
+}
+
+
+/* Subtitle */
+
+.skills-header p {
+    margin-top: 100px;
+
+    color: #17344c;
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   SKILLS GRID
+========================================= */
+
+.skills-grid {
+    position: relative;
+    z-index: 2;
+
+    width: 80%;
+    height: 70%;
+
+    margin: 45px auto 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    column-gap: 25px;
+    row-gap: 42px;
+}
+
+
+/* =========================================
+   SKILL CARDS
+========================================= */
+
+.skill-card {
+    position: relative;
+
+    min-height: 150px;
+
+    background: linear-gradient(
+        145deg,
+        #fffaf3,
+        #eee6dd
+    );
+
+    border: 3px solid #101820;
+    border-radius: 25px;
+
+    padding: 35px 15px 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        0 5px 0 #172332,
+        inset 0 2px 5px white;
+
+    transition: transform 0.25s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* Card Heading */
+
+.skill-card h2 {
+    position: absolute;
+
+    top: -32px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: max-content;
+    max-width: 75%;
+
+    padding: 10px 30px;
+
+    background: linear-gradient(
+        #ffffff,
+        #c6cbd0
+    );
+
+    border: 3px solid #101820;
+    border-radius: 30px;
+
+    font-size: 20px;
+    font-weight: 900;
+
+    color: #101820;
+
+    white-space: nowrap;
+
+    text-align: center;
+
+    box-shadow: 0 3px 0 #172332;
+}
+
+
+/* =========================================
+   SKILL ITEMS
+========================================= */
+
+.skill-items {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.skill-item {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    position: relative;
+}
+
+
+/* Vertical Separators */
+
+.skill-item:not(:last-child)::after {
+    content: "";
+
+    position: absolute;
+
+    right: -10px;
+    top: 5px;
+
+    width: 1px;
+    height: 70px;
+
+    background: #c8c8c8;
+}
+
+
+/* Technology Logos */
+
+.skill-item img {
+    width: 65px;
+    height: 65px;
+
+    object-fit: contain;
+
+    transition: transform 0.25s ease;
+}
+
+.skill-item:hover img {
+    transform: scale(1.12);
+}
+
+
+/* Technology Names */
+
+.skill-item span {
+    font-size: 17px;
+    font-weight: 900;
+
+    color: #080d14;
+    text-align: center;
+}
+
+
+/* =========================================
+   BIKE
+========================================= */
+
+.bike {
+    position: absolute;
+
+    z-index: 3;
+
+    width: clamp(180px, 15vw, 260px);
+    height: auto;
+
+    left: 5%;
+    bottom: 50px;
+    rotate: -22deg;
+
+    object-fit: contain;
+}
+
+
+/* =========================================
+   BIKE SMOKE
+========================================= */
+
+.smoke {
+    position: absolute;
+
+    z-index: 8;
+
+    width: 130px;
+    height: auto;
+
+    left: 4%;
+    bottom: 35px;
+
+    object-fit: contain;
+}
+
+
+
+
+/* =========================================
+   NEXT EXPERIENCE SIGN
+========================================= */
+
+.next-sign {
+    position: absolute;
+
+    z-index: 1;
+
+    width: 15%;
+    height: 21%;
+
+    right: 2%;
+    bottom: 35px;
+
+    display: block;
+}
+
+.next-sign img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    transition: transform 0.3s ease;
+}
+
+.next-sign:hover img {
+    transform: translateX(8px) rotate(-2deg);
+}
+
+
+/* =========================================
+   RACING ROAD
+========================================= */
+
+.road {
+    position: absolute;
+
+    z-index: 3;
+
+    width: 105%;
+    height: 100%;
+
+    left: -1.5%;
+    bottom: -25%;
+
+    display: block;
+
+    pointer-events: none;
+}
