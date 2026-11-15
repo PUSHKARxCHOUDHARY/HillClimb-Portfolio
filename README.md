@@ -58,31 +58,9 @@ HillClimb-Portfolio/
 └── README.md
 ```
 
-## 🚀 Getting Started
+## 🚀 Preview
+<img width="1904" height="986" alt="{3BE5B8D7-B540-4A3D-8EA0-11309A8B2266}" src="https://github.com/user-attachments/assets/5523d7a2-ee92-4e76-b7b6-39348f2e8b3f" />
 
-Want to explore the project locally?
-
-**1. Clone the repository**
-
-```bash
-git clone https://github.com/PUSHKARxCHOUDHARY/HillClimb-Portfolio.git
-```
-
-**2. Navigate to the project directory**
-
-```bash
-cd HillClimb-Portfolio
-```
-
-**3. Open in VS Code**
-
-```bash
-code .
-```
-
-**4. Run the website**
-
-Open `index.html` using the VS Code Live Server extension.
 
 ## 👨‍💻 About the Developer
 
